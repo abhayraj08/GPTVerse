@@ -1,13 +1,44 @@
-import OpenAI from 'openai';
+import express from 'express';
 import 'dotenv/config';
+import cors from 'cors';
 
-const client = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
+const app = express();
+const PORT = 8080;
 
-const response = await client.responses.create({
-  model: 'gpt-4o-mini',
-  input: 'Joke related to computer science',
-});
+app.use(express.json());  //lets your server read JSON data --> req.body
+app.use(cors());  // lets your frontend talk to your backend
 
-console.log(response.output_text);
+// https://platform.openai.com/docs/api-reference/chat?lang=node.js
+app.post('/test', async (req, res) => {
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{
+        role: "user",
+        content: req.body.message
+      }]
+    })
+  };
+
+
+  try{
+    const response = await fetch("https://api.openai.com/v1/chat/completions", options);
+    const data = await response.json();
+    // console.log(data);
+    res.send(data);
+  } catch (e) {
+    console.log("This is error : ", e);
+  }
+})
+
+
+
+
+app.listen(PORT, () => {
+  console.log(`Server running on ${PORT}`);
+})
