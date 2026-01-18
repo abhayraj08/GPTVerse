@@ -22,6 +22,7 @@ const getOpenAIAPIResponse = async (message) => {
         const response = await fetch("https://api.openai.com/v1/chat/completions", options);
         const data = await response.json();
         // console.log(data);
+        // return data.choices[0].message.content;
         return data;
     } catch (e) {
         console.log("This is error : ", e);
