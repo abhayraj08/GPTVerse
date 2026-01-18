@@ -48,7 +48,7 @@ router.get('/thread/:threadId', async (req, res) => {
     }
 })
 
-router.delete('/delete', async (req, res) => {
+router.delete('/thread/:threadId', async (req, res) => {
     const { threadId } = req.params;
     try {
         const deleteThread = await Thread.findOneAndDelete({threadId});
