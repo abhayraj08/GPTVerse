@@ -2,6 +2,7 @@ import express from "express";
 import "dotenv/config";
 import cors from "cors";
 import mongoose from "mongoose";
+import chatRoutes from "./routes/chat.js";
 
 const app = express();
 const PORT = 8080;
@@ -15,6 +16,9 @@ mongoose.connect(MONGO_URL)
 // Middleware
 app.use(express.json());  //lets your server read JSON data --> req.body
 app.use(cors());  // lets your frontend talk to your backend
+
+// Routes
+app.use("/api", chatRoutes);
 
 
 // https://platform.openai.com/docs/api-reference/chat?lang=node.js
@@ -46,7 +50,7 @@ app.use(cors());  // lets your frontend talk to your backend
 
 
 
-
+// Server Listening
 app.listen(PORT, () => {
   console.log(`Server running on ${PORT}`);
 })
