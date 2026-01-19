@@ -1,12 +1,15 @@
 import "./ChatWindow.css"
 import Chat from "./Chat"
-import { useContext } from "react"
+import { useContext, useState } from "react"
 import { MyContext } from "./MyContext"
+import { ScaleLoader } from "react-spinners"
 
 export default function ChatWindow() {
     const { prompt, setPrompt, reply, setReply, currThreadId } = useContext(MyContext);
+    const [loading, setLoading] = useState(false);
     
     const getReply = async() => {
+        setLoading(true);
         const options = {
             method: "POST",
             headers: {
@@ -26,6 +29,7 @@ export default function ChatWindow() {
         } catch(e) {
             console.log(e);
         }
+        setLoading(false);
     }
 
     return (
@@ -42,6 +46,8 @@ export default function ChatWindow() {
             </div>
 
             <Chat />
+
+            <ScaleLoader color="green" loading={loading}/>
 
             <div className="chatInput">
                 <div className="inputBox">
