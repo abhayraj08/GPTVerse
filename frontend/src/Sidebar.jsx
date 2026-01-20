@@ -3,6 +3,7 @@ import { useContext, useEffect } from "react";
 import { MyContext } from "./MyContext";
 import {v1 as uuidv1} from 'uuid'
 import { BaseURL } from "./Config";
+import logo from "./assets/logo.png";
 
 export default function Sidebar() {
     const {allThreads, setAllThreads, currThreadId, setNewChat, setPrompt, setReply, setCurrThreadId, setPrevChats} = useContext(MyContext);
@@ -67,7 +68,7 @@ export default function Sidebar() {
         <section className="sidebar">
             {/* sidebar-header */}
             <div className="sidebar-header">
-                <img onClick={createNewChat} src="./assets/logo.png" alt="GPT logo" className="logo"/>
+                <img onClick={createNewChat} src={logo} alt="GPT logo" className="logo"/>
                 <span onClick={createNewChat}><i className="fa-solid fa-pen-to-square"></i></span>
             </div>
 
