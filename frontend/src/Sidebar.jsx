@@ -1,6 +1,26 @@
 import "./Sidebar.css";
+import { useContext, useEffect } from "react";
+import { MyContext } from "./MyContext";
 
 export default function Sidebar() {
+    const {allThreads, setAllThreads, currThreadId} = useContext(MyContext);
+
+    const getAllThread = async() => {
+        try {
+            const response = await fetch("http://localhost:8080/api/thread");
+            const res = await response.json();
+            const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
+            console.log(filteredData);
+            setAllThreads(filteredData)
+        } catch(e) {
+            console.log("Error in getting all thread : ", e);
+        }
+    }
+
+    useEffect(() => {
+        getAllThread();
+
+    }, [currThreadId]);
 
     return (
         <section className="sidebar">
@@ -12,9 +32,11 @@ export default function Sidebar() {
 
             {/* history */}
             <ul className="history">
-                <li>thread1</li>
-                <li>thread2</li>
-                <li>thread3</li>
+                {
+                    allThreads?.map((thread, idx) => (
+                        <li key={idx}>{thread.title}</li>
+                    ))
+                }
             </ul>
 
             {/* sign */}
