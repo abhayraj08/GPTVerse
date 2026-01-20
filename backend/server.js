@@ -15,7 +15,7 @@ mongoose.connect(MONGO_URL)
 
 // Middleware
 app.use(express.json());  //lets your server read JSON data --> req.body
-app.use(cors({origin: "https://gpt-verse-nu.vercel.app"}));  // lets your frontend talk to your backend
+app.use(cors());  // lets your frontend talk to your backend
 
 // Routes
 app.use("/api", chatRoutes);
