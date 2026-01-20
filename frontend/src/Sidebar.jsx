@@ -64,21 +64,25 @@ export default function Sidebar() {
 
     return (
         <section className="sidebar">
-            {/* new chat button */}
-            <button onClick={createNewChat}>
-                <img src="src/assets/blacklogo.png" alt="GPT logo" className="logo"/>
-                <span><i className="fa-solid fa-pen-to-square"></i></span>
-            </button>
+            {/* sidebar-header */}
+            <div className="sidebar-header">
+                <img onClick={createNewChat} src="src/assets/logo.png" alt="GPT logo" className="logo"/>
+                <span onClick={createNewChat}><i className="fa-solid fa-pen-to-square"></i></span>
+            </div>
 
             {/* history */}
             <ul className="history">
+            <p>Your chats</p>
                 {
                     allThreads?.map((thread, idx) => (
-                        <li key={idx} onClick={(e) => changeThread(thread.threadId)}>
+                        <li key={idx} 
+                            onClick={(e) => changeThread(thread.threadId)} 
+                            className={thread.threadId == currThreadId ? "highlighted" : ""}
+                        >
                             {thread.title}
                             <i className="fa-solid fa-trash"
                                 onClick={(e) => {
-                                    e.stopPropagation(); //event bubbling
+                                    e.stopPropagation(); //stop event bubbling
                                     deleteThread(thread.threadId);
                                 }}
                             />
@@ -89,7 +93,7 @@ export default function Sidebar() {
 
             {/* sign */}
             <div className="sign">
-                <p>By Abhay &hearts;</p>
+                <p>By Abhay </p>
             </div>
         </section>
     )

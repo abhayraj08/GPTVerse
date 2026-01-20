@@ -8,10 +8,12 @@ export default function ChatWindow() {
     const { prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat } = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [toggleReply, setToggleReply] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     
     const getReply = async() => {
         setLoading(true);
         setNewChat(false);
+        
         const options = {
             method: "POST",
             headers: {
@@ -52,6 +54,10 @@ export default function ChatWindow() {
         setPrompt("");
     }, [toggleReply]); //reply
 
+    const handleProfileClick = () => {
+        setIsOpen(!isOpen);
+    }
+
     return (
         <div className="chatWindow">
             <div className="navbar">
@@ -60,10 +66,18 @@ export default function ChatWindow() {
                         4o-mini <i className="fa-solid fa-chevron-down" />
                     </div>
                 </span>
-                <div className="userIconDiv">
+                <div className="userIconDiv" onClick={handleProfileClick}>
                     <i className="fa-solid fa-user" />
                 </div>
             </div>
+            {
+                isOpen && 
+                <div className="dropDown">
+                    <div className="dropDownItem"><i class="fa-solid fa-gear"></i> Settings</div>
+                    <div className="dropDownItem"><i class="fa-solid fa-cloud-arrow-up"></i> Upgrade plan</div>
+                    <div className="dropDownItem"><i class="fa-solid fa-arrow-right-from-bracket"></i> Log out</div>
+                </div>
+            }
 
             <Chat />
 
