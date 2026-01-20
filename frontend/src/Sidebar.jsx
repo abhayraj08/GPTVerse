@@ -67,7 +67,7 @@ export default function Sidebar() {
         <section className="sidebar">
             {/* sidebar-header */}
             <div className="sidebar-header">
-                <img onClick={createNewChat} src="./src/assets/logo.png" alt="GPT logo" className="logo"/>
+                <img onClick={createNewChat} src="./assets/logo.png" alt="GPT logo" className="logo"/>
                 <span onClick={createNewChat}><i className="fa-solid fa-pen-to-square"></i></span>
             </div>
 
