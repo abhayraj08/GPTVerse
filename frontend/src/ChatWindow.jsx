@@ -3,6 +3,7 @@ import Chat from "./Chat"
 import { useContext, useEffect, useState } from "react"
 import { MyContext } from "./MyContext"
 import { ScaleLoader } from "react-spinners"
+import { BaseURL } from "./Config"
 
 export default function ChatWindow() {
     const { prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat } = useContext(MyContext);
@@ -26,7 +27,7 @@ export default function ChatWindow() {
         }
 
         try {
-            const response = await fetch("http://localhost:8080/api/chat", options);
+            const response = await fetch(`${BaseURL}/api/chat`, options);
             const res = await response.json();
             console.log("GPT ke API ke liye paaisa lagta hai : ", res);
             setReply(res.reply);

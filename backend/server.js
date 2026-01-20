@@ -15,7 +15,7 @@ mongoose.connect(MONGO_URL)
 
 // Middleware
 app.use(express.json());  //lets your server read JSON data --> req.body
-app.use(cors());  // lets your frontend talk to your backend
+app.use(cors({origin: "https://gpt-verse-nu.vercel.app/"}));  // lets your frontend talk to your backend
 
 // Routes
 app.use("/api", chatRoutes);
@@ -48,7 +48,16 @@ app.use("/api", chatRoutes);
 //   }
 // })
 
+// For any route not matched above
+app.all(/.*/, (req, res) => {
+    res.send("Backend is running!!");
+})
 
+// Global error-handling middleware
+app.use((err, req, res, next) => {
+    let { statusCode = 500, message = "Something went wrong" } = err;
+    res.status(statusCode).send(message);
+})
 
 // Server Listening
 app.listen(PORT, () => {
