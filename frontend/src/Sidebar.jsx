@@ -41,7 +41,24 @@ export default function Sidebar() {
             setNewChat(false);
             setReply(null);
         } catch(e) {
-            console.log("Loading problem : ", e);
+            console.log("Loading problem error : ", e);
+        }
+    }
+
+    const deleteThread = async (threadId) => {
+        try {
+            const response = await fetch(`http://localhost:8080/api/thread/${threadId}`, {method: "DELETE"});
+            const res = await response.json();
+            console.log(res);
+
+            //updated threads re-render
+            setAllThreads(prev => prev.filter(thread => thread.threadId !== threadId));
+
+            if(threadId == currThreadId) {
+                createNewChat();
+            }
+        } catch(e) {
+            console.log("Delete Thread error : ", e);
         }
     }
 
@@ -57,7 +74,15 @@ export default function Sidebar() {
             <ul className="history">
                 {
                     allThreads?.map((thread, idx) => (
-                        <li key={idx} onClick={(e) => changeThread(thread.threadId)}>{thread.title}</li>
+                        <li key={idx} onClick={(e) => changeThread(thread.threadId)}>
+                            {thread.title}
+                            <i className="fa-solid fa-trash"
+                                onClick={(e) => {
+                                    e.stopPropagation(); //event bubbling
+                                    deleteThread(thread.threadId);
+                                }}
+                            />
+                        </li>
                     ))
                 }
             </ul>

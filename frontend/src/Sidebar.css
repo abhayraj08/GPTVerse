@@ -67,3 +67,19 @@ button:hover {
     text-align: center;
     border-top: solid 0.25px rgba(255, 255, 255, 0.5);
 }
+
+/* delete thread */
+.fa-trash {
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    color: #fff;
+}
+
+.history li:hover .fa-trash {
+    opacity: 1;
+}
+
+.fa-trash:hover {
+    color: #f87171;
+}
