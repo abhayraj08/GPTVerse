@@ -7,7 +7,7 @@ import { ScaleLoader } from "react-spinners"
 export default function ChatWindow() {
     const { prompt, setPrompt, reply, setReply, currThreadId, prevChats, setPrevChats } = useContext(MyContext);
     const [loading, setLoading] = useState(false);
-    const [click, setClick] = useState(false);
+    const [toggleReply, setToggleReply] = useState(false);
     
     const getReply = async() => {
         setLoading(true);
@@ -30,6 +30,7 @@ export default function ChatWindow() {
         } catch(e) {
             console.log("This is error : ", e);
         }
+        setToggleReply((prev) => !prev); 
         setLoading(false);
     }
 
@@ -46,7 +47,9 @@ export default function ChatWindow() {
                 }]
             ))
         }
-    }, [reply]);
+
+        setPrompt("");
+    }, [toggleReply]); //reply
 
     return (
         <div className="chatWindow">

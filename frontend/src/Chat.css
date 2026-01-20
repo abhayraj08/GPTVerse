@@ -10,7 +10,6 @@
     font-size: 0.9rem;
 }
 
-
 .gptDiv {
     text-align: left;
     font-size: 0.9rem;
@@ -23,4 +22,13 @@
     margin-left: 15rem;
     max-width: 500px;
     width: fit-content;
+}
+
+/* Reply styling */
+.hljs {
+    border-radius: 14px !important;
+}
+
+pre {
+    white-space: pre-wrap;
 }
