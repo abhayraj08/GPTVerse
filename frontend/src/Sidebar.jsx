@@ -11,7 +11,7 @@ export default function Sidebar() {
             const response = await fetch("http://localhost:8080/api/thread");
             const res = await response.json();
             const filteredData = res.map(thread => ({threadId: thread.threadId, title: thread.title}));
-            console.log(filteredData);
+            // console.log(filteredData);
             setAllThreads(filteredData)
         } catch(e) {
             console.log("Error in getting all thread : ", e);
@@ -20,7 +20,6 @@ export default function Sidebar() {
 
     useEffect(() => {
         getAllThread();
-
     }, [currThreadId]);
 
     const createNewChat = () => {
@@ -29,6 +28,21 @@ export default function Sidebar() {
         setReply(null);
         setCurrThreadId(uuidv1());
         setPrevChats([]);
+    }
+
+    const changeThread = async (newThreadId) => {
+        setCurrThreadId(newThreadId);
+
+        try {
+            const response = await fetch(`http://localhost:8080/api/thread/${newThreadId}`)
+            const res = await response.json();
+            // console.log(res);
+            setPrevChats(res);
+            setNewChat(false);
+            setReply(null);
+        } catch(e) {
+            console.log("Loading problem : ", e);
+        }
     }
 
     return (
@@ -43,7 +57,7 @@ export default function Sidebar() {
             <ul className="history">
                 {
                     allThreads?.map((thread, idx) => (
-                        <li key={idx}>{thread.title}</li>
+                        <li key={idx} onClick={(e) => changeThread(thread.threadId)}>{thread.title}</li>
                     ))
                 }
             </ul>

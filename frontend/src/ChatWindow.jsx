@@ -5,12 +5,13 @@ import { MyContext } from "./MyContext"
 import { ScaleLoader } from "react-spinners"
 
 export default function ChatWindow() {
-    const { prompt, setPrompt, reply, setReply, currThreadId, prevChats, setPrevChats } = useContext(MyContext);
+    const { prompt, setPrompt, reply, setReply, currThreadId, setPrevChats, setNewChat } = useContext(MyContext);
     const [loading, setLoading] = useState(false);
     const [toggleReply, setToggleReply] = useState(false);
     
     const getReply = async() => {
         setLoading(true);
+        setNewChat(false);
         const options = {
             method: "POST",
             headers: {
@@ -25,7 +26,7 @@ export default function ChatWindow() {
         try {
             const response = await fetch("http://localhost:8080/api/chat", options);
             const res = await response.json();
-            console.log(res);
+            console.log("GPT ke API ke liye paaisa lagta hai : ", res);
             setReply(res.reply);
         } catch(e) {
             console.log("This is error : ", e);
@@ -66,7 +67,7 @@ export default function ChatWindow() {
 
             <Chat />
 
-            <ScaleLoader color="green" loading={loading}/>
+            <ScaleLoader color="white" loading={loading}/>
 
             <div className="chatInput">
                 <div className="inputBox">
