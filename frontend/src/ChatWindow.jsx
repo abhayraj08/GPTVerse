@@ -29,7 +29,7 @@ export default function ChatWindow() {
         try {
             const response = await fetch(`${BaseURL}/api/chat`, options);
             const res = await response.json();
-            console.log("GPT ke API ke liye paaisa lagta hai : ", res);
+            // console.log("GPT ke API ke liye paaisa lagta hai : ", res);
             setReply(res.reply);
         } catch(e) {
             console.log("This is error : ", e);

@@ -7,10 +7,10 @@ const getOpenAIAPIResponse = async (message) => {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`
+            "Authorization": `Bearer ${process.env.GROQ_API_KEY}`
         },
         body: JSON.stringify({
-            model: "gpt-4o-mini",
+            model: "openai/gpt-oss-120b",
             messages: [{
                 role: "user",
                 content: message
@@ -19,11 +19,14 @@ const getOpenAIAPIResponse = async (message) => {
     };
 
     try {
-        const response = await fetch("https://api.openai.com/v1/chat/completions", options);
+        const response = await fetch("https://api.groq.com/openai/v1/chat/completions", options);
         const data = await response.json();
         // console.log(data);
-        // return data.choices[0].message.content;
-        return data.error.message;
+        try{
+            return data.choices[0].message.content;
+        } catch (e) {
+            return data.error.message;
+        }
     } catch (e) {
         console.log("This is error : ", e);
     }
